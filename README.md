@@ -1,1 +1,1 @@
-# Spicord-StaffChat
+# Spicord StaffChat
