@@ -26,13 +26,10 @@ public class StaffChat implements CommandExecutor {
                     player.sendMessage(ChatColor.RED + "Please enter a message!");
                 } else {
                     Addon addon = Addon.getInstance();
-                    String sender = commandSender.getName();
-                    String args = String.join(" ", strings);
-                    String msg = Utils.translateCC(args);
-                    String dscMsg = Utils.removeCC(args);
+                    String msg = String.join(" ", strings);
                     String channel = plugin.getConfig().getString("staff-channel");
-                    Utils.sendPermissionMessage(ChatColor.DARK_RED + "StaffChat " + ChatColor.RED + sender + ChatColor.DARK_RED + ": " + ChatColor.GREEN + msg, "staffchat.see");
-                    addon.sendMessage("**[StaffChat] " + sender + "**: " + dscMsg, channel);
+                    Utils.sendPermissionMessage(plugin.generalLayout(msg, player), "staffchat.see");
+                    addon.sendMessage(plugin.discordLayout(msg, player), channel);
                 }
 
             } else { player.sendMessage(Utils.permissionMessage); }

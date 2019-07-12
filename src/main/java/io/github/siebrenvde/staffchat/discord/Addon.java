@@ -3,9 +3,10 @@ package io.github.siebrenvde.staffchat.discord;
 import eu.mcdb.spicord.api.addon.SimpleAddon;
 import eu.mcdb.spicord.bot.DiscordBot;
 import eu.mcdb.spicord.bot.command.DiscordBotCommand;
+import io.github.siebrenvde.staffchat.Main;
 import io.github.siebrenvde.staffchat.util.Utils;
 import net.dv8tion.jda.core.entities.TextChannel;
-import org.bukkit.ChatColor;
+import net.dv8tion.jda.core.entities.User;
 
 public class Addon extends SimpleAddon {
 
@@ -35,13 +36,12 @@ public class Addon extends SimpleAddon {
     }
 
     private void staffChat(DiscordBotCommand command) {
-        String sender = command.getMessage().getAuthor().getAsTag();
-        String rawmsg = command.getMessage().getContentRaw().replaceFirst("-sc", "").replaceFirst("-staffchat", "").replaceFirst("-schat", "").replaceFirst("-staffc", "");
-        String msg = Utils.translateCC(rawmsg);
-        if(rawmsg.length() < 1) {
+        User user = command.getMessage().getAuthor();
+        String msg = command.getMessage().getContentRaw();
+        if(msg.length() < 2) {
             command.getMessage().getChannel().sendMessage("**Usage**: ***-sc <message>***").queue();
         } else {
-            Utils.sendPermissionMessage(ChatColor.BLUE + "Discord " + ChatColor.DARK_RED + "StaffChat " + ChatColor.RED + sender + ChatColor.DARK_RED + ":" + ChatColor.GREEN + msg, "staffchat.see");
+            Utils.sendPermissionMessage(Main.plugin.minecraftLayout(msg, user), "staffchat.see");
         }
     }
 

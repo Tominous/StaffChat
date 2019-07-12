@@ -46,4 +46,5 @@ public class Utils {
 
     public static String permissionMessage = ChatColor.RED + "You don't have permission to do this!";
 
+
 }
