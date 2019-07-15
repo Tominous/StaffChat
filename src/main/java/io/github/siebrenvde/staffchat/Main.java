@@ -14,7 +14,6 @@ public class Main extends JavaPlugin {
     public static Main plugin;
 
     public void onEnable() {
-        //registerConfig();
         saveDefaultConfig();
         registerCommands();
         Spicord.getInstance().getAddonManager().registerAddon(new Addon());
@@ -24,11 +23,6 @@ public class Main extends JavaPlugin {
     private void registerCommands() {
         getCommand("staffchat").setExecutor(new StaffChat(this));
     }
-
-//   private void registerConfig() {
-//        getConfig().options().copyDefaults(true);
-//        saveConfig();
-//    }
 
     private FileConfiguration config = getConfig();
 
@@ -48,28 +42,27 @@ public class Main extends JavaPlugin {
 
     public String minecraftLayout(String msg, User user) {
 
-        String dscMsg = msg.replaceFirst("-sc", "").replaceFirst("-staffchat", "").replaceFirst("-schat", "").replaceFirst("-staffc", "");
-
-        String ccMsg = Utils.translateCC(dscMsg);
+        String dscMsg = msg.replaceFirst("-sc ", "").replaceFirst("-staffchat ", "").replaceFirst("-schat ", "").replaceFirst("-staffc ", "");
 
         String rawMsg = config.getString("minecraft-layout")
                 .replace("%username%", user.getName())
                 .replace("%usertag%", user.getAsTag())
-                .replace("%message%", ccMsg);
+                .replace("%message%", dscMsg);
 
         String message = Utils.translateCC(rawMsg);
 
+        getLogger().info(message);
         return message;
     }
 
     public String discordLayout(String msg, Player player) {
 
-        String dcsMsg = Utils.removeCC(msg);
+        String dscMsg = Utils.removeCC(msg);
 
         String message = config.getString("discord-layout")
                 .replace("%displayname%", player.getDisplayName())
                 .replace("%username%", player.getName())
-                .replace("%message%", dcsMsg);
+                .replace("%message%", dscMsg);
 
         return message;
     }
