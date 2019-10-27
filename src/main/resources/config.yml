@@ -1,14 +1,18 @@
 # Spicord StaffChat by Siebrenvde
-# Version 1.1
+# Version 1.2
 
 staff-channel: "123456789012345678"
+
+# ----------------------
+# StaffChat
+# ----------------------
 
 # The message shown to in-game staff when using /sc in-game
 # Placeholders:
 # %displayname% - Displays the player's displayname
 # %username% - Displays the player's username
 # %message% - Displays the sent message
-general-layout: "&4StaffChat &c%displayname%&4: &a%message%"
+general-layout: "&4StaffChat &c%username%&4: &a%message%"
 
 # The message shown to in-game staff when using -sc on Discord
 # Placeholders:
@@ -22,4 +26,19 @@ minecraft-layout: "&9Discord &4StaffChat &c%usertag%&4: &a%message%"
 # %displayname% - Displays the player's displayname
 # %username% - Displays the player's username
 # %message% - Displays the sent message
-discord-layout: "**[StaffChat] %displayname%**: %message%"
+discord-layout: "**[StaffChat] %username%**: %message%"
+
+# ----------------------
+# Reports & Helpop
+# ----------------------
+
+# Whether to use embed in reports (RECOMMENDED)
+use-embed: true
+
+report-message-discord: "**[Report] %reporter%** reported **%reported%** for *%reason%*"
+
+report-message: "&c%reporter% &7reported &c%reported% &7for &c%reason%"
+
+helpop-message-discord: "**[HelpOp] %player%**: %message%"
+
+helpop-message: "&cHelpOp %player%: &e%message%"

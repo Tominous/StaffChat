@@ -5,8 +5,12 @@ import eu.mcdb.spicord.bot.DiscordBot;
 import eu.mcdb.spicord.bot.command.DiscordBotCommand;
 import io.github.siebrenvde.staffchat.Main;
 import io.github.siebrenvde.staffchat.util.Utils;
+import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
+
+import java.awt.*;
 
 public class Addon extends SimpleAddon {
 
@@ -33,6 +37,11 @@ public class Addon extends SimpleAddon {
     public void sendMessage(String message, String channelID) {
         TextChannel tc = bot.getJda().getTextChannelById(channelID);
         tc.sendMessage(message).queue();
+    }
+
+    public void sendEmbed(String title, String description, String channelID) {
+        TextChannel tc = bot.getJda().getTextChannelById(channelID);
+        tc.sendMessage(new EmbedBuilder().setTitle(title).setDescription(description).build()).queue();
     }
 
     private void staffChat(DiscordBotCommand command) {
