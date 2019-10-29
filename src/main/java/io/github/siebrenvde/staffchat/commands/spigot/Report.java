@@ -33,7 +33,7 @@ public class Report implements CommandExecutor {
                 String reporter = player.getName();
                 String reported = reportedPlayer.getName();
 
-                String reason = String.join(" ", strings).replaceFirst(reportedPlayer.getName() + " ", "");
+                String reason = String.join(" ", strings).replaceFirst("(?i)" + reportedPlayer.getName() + " ", "");
 
                 player.sendMessage(ChatColor.GRAY + "Reported " + ChatColor.RED + reported + ChatColor.GRAY + " for " + ChatColor.RED + reason + ChatColor.GRAY + ".");
 
