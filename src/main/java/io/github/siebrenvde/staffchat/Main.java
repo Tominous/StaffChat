@@ -51,7 +51,6 @@ public class Main extends JavaPlugin {
 
         String message = Utils.translateCC(rawMsg);
 
-        getLogger().info(message);
         return message;
     }
 
