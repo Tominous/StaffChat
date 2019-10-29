@@ -1,5 +1,6 @@
 package io.github.siebrenvde.staffchat.util;
 
+import io.github.siebrenvde.staffchat.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -46,5 +47,15 @@ public class Utils {
 
     public static String permissionMessage = ChatColor.RED + "You don't have permission to do this!";
 
+    public static String getChannel(String channel) {
+
+        if(Main.plugin.getConfig().getBoolean("use-combined-channel")) {
+            return Main.plugin.getConfig().getString("combined-channel");
+        }
+        else {
+            return Main.plugin.getConfig().getString(channel);
+        }
+
+    }
 
 }
