@@ -11,8 +11,9 @@ staff-channel: "123456789012345678"
 # Placeholders:
 # %displayname% - Displays the player's displayname
 # %username% - Displays the player's username
+# %server% - Displays the server the player is in
 # %message% - Displays the sent message
-general-layout: "&4StaffChat &c%username%&4: &a%message%"
+general-layout: "&4StaffChat &c%username% (%server%)&4: &a%message%"
 
 # The message shown to in-game staff when using -sc on Discord
 # Placeholders:
@@ -25,8 +26,9 @@ minecraft-layout: "&9Discord &4StaffChat &c%usertag%&4: &a%message%"
 # Placeholders:
 # %displayname% - Displays the player's displayname
 # %username% - Displays the player's username
+# %server% - Displays the server the player is in
 # %message% - Displays the sent message
-discord-layout: "**[StaffChat] %username%**: %message%"
+discord-layout: "**[StaffChat] %username% (%server%)**: %message%"
 
 # ----------------------
 # Reports & Helpop
@@ -35,10 +37,10 @@ discord-layout: "**[StaffChat] %username%**: %message%"
 # Whether to use embed in reports (RECOMMENDED)
 use-embed: true
 
-report-message-discord: "**[Report] %reporter%** reported **%reported%** for *%reason%*"
+report-message-discord: "**[Report] %reporter%** reported **%reported%** on **%server%** for *%reason%*"
 
-report-message: "&c%reporter% &7reported &c%reported% &7for &c%reason%"
+report-message: "&c%reporter% &7reported &c%reported% &7on &c%server% &7for &c%reason%"
 
-helpop-message-discord: "**[HelpOp] %player%**: %message%"
+helpop-message-discord: "**[HelpOp] %player% (%server%)**: %message%"
 
-helpop-message: "&cHelpOp %player%: &e%message%"
+helpop-message: "&cHelpOp %player% (%server%): &e%message%"
