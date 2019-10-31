@@ -8,6 +8,7 @@ import io.github.siebrenvde.staffchat.util.SpigotUtils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class SpigotAddon extends SimpleAddon {
 
@@ -25,10 +26,17 @@ public class SpigotAddon extends SimpleAddon {
     @Override
     public void onLoad(DiscordBot bot) {
         this.bot = bot;
-        bot.onCommand("sc", this::staffChat);
-        bot.onCommand("staffchat", this::staffChat);
-        bot.onCommand("schat", this::staffChat);
-        bot.onCommand("staffc", this::staffChat);
+        enableCommands();
+        bot.getJda().addEventListener(new MessageListenerSpigot());
+    }
+
+    private void enableCommands() {
+        if(Spigot.plugin.getConfig().getBoolean("enable-discord-commands")) {
+            bot.onCommand("sc", this::staffChat);
+            bot.onCommand("staffchat", this::staffChat);
+            bot.onCommand("schat", this::staffChat);
+            bot.onCommand("staffc", this::staffChat);
+        }
     }
 
     public void sendMessage(String message, String channelID) {

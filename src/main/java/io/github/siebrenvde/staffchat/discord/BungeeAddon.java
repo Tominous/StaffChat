@@ -25,10 +25,17 @@ public class BungeeAddon extends SimpleAddon {
     @Override
     public void onLoad(DiscordBot bot) {
         this.bot = bot;
-        bot.onCommand("sc", this::staffChat);
-        bot.onCommand("staffchat", this::staffChat);
-        bot.onCommand("schat", this::staffChat);
-        bot.onCommand("staffc", this::staffChat);
+        enableCommands();
+        bot.getJda().addEventListener(new MessageListenerBungee());
+    }
+
+    private void enableCommands() {
+        if(Bungee.plugin.config.getBoolean("enable-discord-commands")) {
+            bot.onCommand("sc", this::staffChat);
+            bot.onCommand("staffchat", this::staffChat);
+            bot.onCommand("schat", this::staffChat);
+            bot.onCommand("staffc", this::staffChat);
+        }
     }
 
     public void sendMessage(String message, String channelID) {
