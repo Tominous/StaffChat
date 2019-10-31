@@ -1,7 +1,10 @@
 # Spicord StaffChat by Siebrenvde
-# Version 1.3
+# Version 1.4
 
 staff-channel: "123456789012345678"
+
+# Enabling this forces you to use -sc to send messages to the server
+enable-discord-commands: false
 
 # ----------------------
 # StaffChat
@@ -16,7 +19,7 @@ general-layout: "&4StaffChat &c%username%&4: &a%message%"
 
 # The message shown to in-game staff when using -sc on Discord
 # Placeholders:
-# %usertag% - Displays the user's username + tag (Ex. Siebrenvde#5455)
+# %usertag% - Displays the user's username + tag (Ex. Siebrenvde#0863)
 # %username% - Displays the user's username (Ex. Siebrenvde)
 # %message% - Displays the sent message
 minecraft-layout: "&9Discord &4StaffChat &c%usertag%&4: &a%message%"
