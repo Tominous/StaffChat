@@ -38,13 +38,15 @@ public class BungeeAddon extends SimpleAddon {
         }
     }
 
-    public void sendMessage(String message, String channelID) {
-        TextChannel tc = bot.getJda().getTextChannelById(channelID);
+    private String prefix = BungeeUtils.spicordPrefix();
+
+    public void sendMessage(String message) {
+        TextChannel tc = bot.getJda().getTextChannelById(Bungee.plugin.config.getString("staff-channel"));
         tc.sendMessage(message).queue();
     }
 
-    public void sendEmbed(String title, String description, String channelID) {
-        TextChannel tc = bot.getJda().getTextChannelById(channelID);
+    public void sendEmbed(String title, String description) {
+        TextChannel tc = bot.getJda().getTextChannelById(Bungee.plugin.config.getString("staff-channel"));
         tc.sendMessage(new EmbedBuilder().setTitle(title).setDescription(description).build()).queue();
     }
 
@@ -52,7 +54,7 @@ public class BungeeAddon extends SimpleAddon {
         User user = command.getMessage().getAuthor();
         String msg = command.getMessage().getContentRaw();
         if(msg.length() < 2) {
-            command.getMessage().getChannel().sendMessage("**Usage**: ***-sc <message>***").queue();
+            command.getMessage().getChannel().sendMessage("**Usage**: ***" + prefix + " <message>***").queue();
         } else {
             BungeeUtils.sendPermissionMessage(Bungee.plugin.minecraftLayout(msg, user), "staffchat.see");
         }

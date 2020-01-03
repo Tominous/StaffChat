@@ -1,5 +1,6 @@
 package io.github.siebrenvde.staffchat;
 
+import com.moandjiezana.toml.Toml;
 import eu.mcdb.spicord.Spicord;
 import io.github.siebrenvde.staffchat.commands.spigot.HelpOp;
 import io.github.siebrenvde.staffchat.commands.spigot.Report;
@@ -7,9 +8,11 @@ import io.github.siebrenvde.staffchat.commands.spigot.StaffChat;
 import io.github.siebrenvde.staffchat.discord.SpigotAddon;
 import io.github.siebrenvde.staffchat.util.SpigotUtils;
 import net.dv8tion.jda.core.entities.User;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
 
 public class Spigot extends JavaPlugin {
 
@@ -30,13 +33,13 @@ public class Spigot extends JavaPlugin {
 
     private FileConfiguration config = getConfig();
 
-    public String generalLayout(String msg, Player player) {
+    public String generalLayout(String msg, String player, String playerDN) {
 
         String ccMsg = SpigotUtils.translateCC(msg);
 
         String rawMsg = config.getString("general-layout")
-                .replace("%displayname%", player.getDisplayName())
-                .replace("%username%", player.getName())
+                .replace("%displayname%", playerDN)
+                .replace("%username%", player)
                 .replace("%message%", ccMsg);
 
         String message = SpigotUtils.translateCC(rawMsg);
@@ -46,7 +49,8 @@ public class Spigot extends JavaPlugin {
 
     public String minecraftLayout(String msg, User user) {
 
-        String dscMsg = msg.replaceFirst("-sc ", "").replaceFirst("-staffchat ", "").replaceFirst("-schat ", "").replaceFirst("-staffc ", "");
+        String p = SpigotUtils.spicordPrefix();
+        String dscMsg = msg.replaceFirst(p + "sc ", "").replaceFirst(p + "staffchat ", "").replaceFirst(p + "schat ", "").replaceFirst(p + "staffc ", "");
 
         String rawMsg = config.getString("minecraft-layout")
                 .replace("%username%", user.getName())
@@ -58,13 +62,13 @@ public class Spigot extends JavaPlugin {
         return message;
     }
 
-    public String discordLayout(String msg, Player player) {
+    public String discordLayout(String msg, String player, String playerDN) {
 
         String dscMsg = SpigotUtils.removeCC(msg);
 
         String message = config.getString("discord-layout")
-                .replace("%displayname%", player.getDisplayName())
-                .replace("%username%", player.getName())
+                .replace("%displayname%", playerDN)
+                .replace("%username%", player)
                 .replace("%message%", dscMsg);
 
         return message;
@@ -118,6 +122,26 @@ public class Spigot extends JavaPlugin {
         String message = SpigotUtils.translateCC(rawMsg);
 
         return message;
+    }
+
+    public static Integer configNum() {
+        File spFile;
+        spFile = new File(Bukkit.getPluginManager().getPlugin("Spicord").getDataFolder() + "/config.toml");
+        Toml cfg = new Toml().read(spFile);
+
+        int num = 0;
+        int i = 0;
+
+        while(i == 0) {
+            if(cfg.getList("bots[" + num + "].addons").contains("staffchat")) {
+                i++;
+            }
+            else {
+                num++;
+            }
+            return num;
+        }
+        return num;
     }
 
 }

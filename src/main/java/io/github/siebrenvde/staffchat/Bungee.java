@@ -1,5 +1,6 @@
 package io.github.siebrenvde.staffchat;
 
+import com.moandjiezana.toml.Toml;
 import eu.mcdb.spicord.Spicord;
 import io.github.siebrenvde.staffchat.commands.bungee.HelpOp;
 import io.github.siebrenvde.staffchat.commands.bungee.Report;
@@ -8,7 +9,6 @@ import io.github.siebrenvde.staffchat.discord.BungeeAddon;
 import io.github.siebrenvde.staffchat.util.BungeeUtils;
 import net.dv8tion.jda.core.entities.User;
 import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
@@ -77,7 +77,8 @@ public class Bungee extends Plugin {
 
     public String minecraftLayout(String msg, User user) {
 
-        String dscMsg = msg.replaceFirst("-sc ", "").replaceFirst("-staffchat ", "").replaceFirst("-schat ", "").replaceFirst("-staffc ", "");
+        String p = BungeeUtils.spicordPrefix();
+        String dscMsg = msg.replaceFirst(p + "sc ", "").replaceFirst(p + "staffchat ", "").replaceFirst(p + "schat ", "").replaceFirst(p + "staffc ", "");
 
         String rawMsg = config.getString("minecraft-layout")
                 .replace("%username%", user.getName())
@@ -154,6 +155,26 @@ public class Bungee extends Plugin {
         String message = BungeeUtils.translateCC(rawMsg);
 
         return message;
+    }
+
+    public static Integer configNum() {
+        File spFile;
+        spFile = new File(ProxyServer.getInstance().getPluginsFolder() + "/Spicord/config.toml");
+        Toml cfg = new Toml().read(spFile);
+
+        int num = 0;
+        int i = 0;
+
+        while(i == 0) {
+            if(cfg.getList("bots[" + num + "].addons").contains("staffchat")) {
+                i++;
+            }
+            else {
+                num++;
+            }
+            return num;
+        }
+        return num;
     }
 
 }

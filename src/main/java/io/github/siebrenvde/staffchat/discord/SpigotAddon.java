@@ -8,7 +8,6 @@ import io.github.siebrenvde.staffchat.util.SpigotUtils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class SpigotAddon extends SimpleAddon {
 
@@ -39,13 +38,15 @@ public class SpigotAddon extends SimpleAddon {
         }
     }
 
-    public void sendMessage(String message, String channelID) {
-        TextChannel tc = bot.getJda().getTextChannelById(channelID);
+    private String prefix = SpigotUtils.spicordPrefix();
+
+    public void sendMessage(String message) {
+        TextChannel tc = bot.getJda().getTextChannelById(Spigot.plugin.getConfig().getString("staff-channel"));
         tc.sendMessage(message).queue();
     }
 
-    public void sendEmbed(String title, String description, String channelID) {
-        TextChannel tc = bot.getJda().getTextChannelById(channelID);
+    public void sendEmbed(String title, String description) {
+        TextChannel tc = bot.getJda().getTextChannelById(Spigot.plugin.getConfig().getString("staff-channel"));
         tc.sendMessage(new EmbedBuilder().setTitle(title).setDescription(description).build()).queue();
     }
 
@@ -53,7 +54,7 @@ public class SpigotAddon extends SimpleAddon {
         User user = command.getMessage().getAuthor();
         String msg = command.getMessage().getContentRaw();
         if(msg.length() < 2) {
-            command.getMessage().getChannel().sendMessage("**Usage**: ***-sc <message>***").queue();
+            command.getMessage().getChannel().sendMessage("**Usage**: ***" + prefix + " <message>***").queue();
         } else {
             SpigotUtils.sendPermissionMessage(Spigot.plugin.minecraftLayout(msg, user), "staffchat.see");
         }
